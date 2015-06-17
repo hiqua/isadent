@@ -92,9 +92,7 @@ def adjust_indent(s):
     >>> adjust_indent('m)" (is "?fin \<Longrightarrow> ?s1 = (\<Sum> m=0..<bd. ?ff m H)")')
     (0, 1)
     """
-    noindent_kw = ['lemma','theory','imports','begin','section','subsection',
-                   'type_synonym','locale','definition','abbreviation','theorem','end','shows',
-                   '\(']
+    noindent_kw = ['lemma','theory','imports','begin','section','subsection','type_synonym','locale','definition','abbreviation','theorem','end','shows','\(','context']
     #Indent what follows, not the line itself
     indent_kw = ['proof','proof-']
     #Deindent what follows, and the line itself
