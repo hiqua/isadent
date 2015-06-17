@@ -43,7 +43,7 @@ def get_kws(s):
     index = [s.find(a) for a in delimiters]
     index = [i for i in index if i != -1]
     if index != []:
-        return s[0:min(index)].strip()
+        return s[0:max(1,min(index))].strip()
     else:
         return s[0:].strip()
 
@@ -89,9 +89,11 @@ def adjust_indent(s):
     >>> adjust_indent("proof (induct H rule: finite_induct)") == adjust_indent("proof")
     True
     >>> adjust_indent('m)" (is "?fin \<Longrightarrow> ?s1 = (\<Sum> m=0..<bd. ?ff m H)")')
-    (0, 0)
+    (0, 1)
     """
-    noindent_kw = ['lemma','theory','imports','begin','subsection','type_synonym','locale','definition','abbreviation','theorem','end','shows']
+    noindent_kw = ['lemma','theory','imports','begin','section','subsection',
+                   'type_synonym','locale','definition','abbreviation','theorem','end','shows',
+                   '\(']
     #Indent what follows, not the line itself
     indent_kw = ['proof','proof-']
     #Deindent what follows, and the line itself
