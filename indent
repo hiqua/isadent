@@ -37,6 +37,8 @@ def get_kws(s):
     'qed'
     >>> get_kws(' proof(')
     'proof'
+    >>> get_kws('next_list_Nil:')
+    'next_list_Nil:'
     """
     s = s.strip()
     delimiters = ['"',' ','(']
@@ -52,7 +54,7 @@ def comment_depth(s, current):
     """
     Return the comment depth implied by this string
     We're gonna make some sane assumptions, namely that there are not more than
-    one opening and one ending of a comment, and that there are in the good
+    one opening and one ending of a comment, and that they are in the good
     order.
     >>> comment_depth('text {* Random text', 0)
     1
@@ -64,6 +66,8 @@ def comment_depth(s, current):
     0
     >>> comment_depth('proof (rule *)', 0)
     0
+    >>> comment_depth('next_list_Nil: "next_list [] = [False]"|',1)
+    1
     """
     depth = current
     op = re.compile('|'.join(['{\*','\(\*']))
@@ -92,11 +96,13 @@ def adjust_indent(s):
     >>> adjust_indent('m)" (is "?fin \<Longrightarrow> ?s1 = (\<Sum> m=0..<bd. ?ff m H)")')
     (0, 1)
     """
-    noindent_kw = ['lemma','theory','imports','begin','section','subsection','type_synonym','locale','definition','abbreviation','theorem','end','shows','\(','context']
+    """>>> adjust_indent('next_list_Nil: "next_list [] = [False]"|')
+    (0, 1)"""
+    noindent_kw = ['lemma','theory','imports','begin','section','subsection','type_synonym','locale','definition','abbreviation','theorem','end','shows','\(','context','fun','inductive']
     #Indent what follows, not the line itself
     indent_kw = ['proof','proof-']
     #Deindent what follows, and the line itself
-    deindent_kw = ['qed',' next']
+    deindent_kw = ['qed','next']
     indent_tmp_kw = [
         'assumes','shows','fixes','and','"'
     ]
