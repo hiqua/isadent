@@ -102,7 +102,7 @@ def adjust_indent(s):
     #Indent what follows, not the line itself
     indent_kw = ['proof','proof-']
     #Deindent what follows, and the line itself
-    deindent_kw = ['qed','next']
+    deindent_kw = ['qed',' next','oops']
     indent_tmp_kw = [
         'assumes','shows','fixes','and','"'
     ]
